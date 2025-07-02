@@ -1,6 +1,7 @@
 name: Kpopdle Daily Pings
 
 on:
+  workflow_dispatch:
   schedule:
     # Wake the server at 23:55 Argentina (02:55 UTC)
     - cron: '55 2 * * *'
