@@ -1,0 +1,26 @@
+name: Kpopdle Daily Pings
+
+on:
+  schedule:
+    # Wake the server at 23:55 Argentina (02:55 UTC)
+    - cron: '55 2 * * *'
+    # Generate answers at 00:00 Argentina (03:00 UTC)
+    - cron: '0 3 * * *'
+
+jobs:
+  wake-server:
+    if: github.event.schedule == '55 2 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health to wake up the server
+        run: |
+          curl -s -o /dev/null -H "User-Agent: Mozilla/5.0" https://kpopdle-api.onrender.com/health
+
+  generate-answer:
+    if: github.event.schedule == '0 3 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /generate to create the daily answer
+        run: |
+          curl -s -o /dev/null -H "User-Agent: Mozilla/5.0" https://kpopdle-api.onrender.com/generate?key=1f8c3e7b2a4d6f9e0b5c7a1e3d2f4b6c
+
