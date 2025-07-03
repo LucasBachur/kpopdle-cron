@@ -19,7 +19,7 @@ on:
 
 jobs:
   wake-server:
-    if: github.event_name == 'schedule' && github.event.schedule == '55 2 * * *' || github.event.inputs.action == 'health'
+    if: (github.event_name == 'schedule' && github.event.schedule == '55 2 * * *') || github.event.inputs.action == 'health'
     runs-on: ubuntu-latest
     steps:
       - name: Ping /health to wake up the server
@@ -27,7 +27,7 @@ jobs:
           curl -s -o /dev/null -H "User-Agent: Mozilla/5.0" https://kpopdle-api.onrender.com/health
 
   generate-answer:
-    if: github.event_name == 'schedule' && github.event.schedule == '0 3 * * *' || github.event.inputs.action == 'generate'
+    if: (github.event_name == 'schedule' && github.event.schedule == '0 3 * * *') || github.event.inputs.action == 'generate'
     runs-on: ubuntu-latest
     steps:
       - name: Call /generate to create the daily answer
